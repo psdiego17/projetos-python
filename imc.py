@@ -6,7 +6,7 @@ layoutTela = [
     [l.Input(key='altura')],
     [l.Text('Peso')],
     [l.Input(key='peso')],
-    [l.Button('calcular')],
+    [l.Button('calcular'), l.Button('limpar')],
     [l.Text('', key='resultado')],
 ]
 
@@ -34,3 +34,6 @@ while True:
             else:
                 resultado = 'com Obesidade Mórbida!'
             janela['resultado'].update(f'Seu IMC é: {imc:.2f}, você está: {resultado}')
+    if event == 'limpar':
+        janela.close()
+janela.close()            

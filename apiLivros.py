@@ -1,7 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 
 #Criando uma aplicação Flask, com o nome do arquivo, servidor onde vai está hospedando a API 
 apiLivros = Flask(__name__)
+apiLivros.config['JSON_SORT_KEYS'] = False #Mostra os dados na mesma ordem que está no banco
 
 #Base de dados local
 biblioteca = [
@@ -25,7 +26,12 @@ biblioteca = [
 #Consultar todos os livros
 @apiLivros.route('/livros', methods=['GET'])
 def buscarLivros():
-    return jsonify(biblioteca)
+    return make_response(
+        jsonify(
+            mensagem = 'Lista de livros',
+            dados = biblioteca
+        )
+    )
 
 #Consultar um livro especifico pelo id
 @apiLivros.route('/livros/<int:id>', methods=['GET'])
@@ -48,7 +54,12 @@ def editarLivroPorId(id):
 def criarNovoLivro():
     novoLivro = request.get_json()
     biblioteca.append(novoLivro)
-    return jsonify(biblioteca)
+    return make_response(
+        jsonify(
+            mensagem = 'Livro Adicionado com sucesso',
+            dados = biblioteca
+        )
+    )
 
 #Excluir um livro especifico pelo id
 @apiLivros.route('/livros/<int:id>', methods=['DELETE'])
